@@ -4,3 +4,5 @@ venv
 __pycache__
 .flaskenv
 app.db
+Pipfile
+Pipfile.lock
