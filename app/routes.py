@@ -125,7 +125,28 @@ def edit_profile():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
+
     return render_template('edit_profile.html', title='Edit Profile', form=form)
+
+
+
+@app.route('/delete/<username>')
+@login_required
+def delete_user(username):
+    if current_user.username == username:
+        # user=User.query.get_or_404(username)
+        try:
+            db.session.delete(current_user)
+            db.session.commit()
+            return redirect(url_for('login'))
+        except:
+            db.session.rollback()
+    return redirect(url_for('/edit_profile'))
+
+
+
+
+
 
 
 @app.route('/follow/<username>', methods=['POST'])
