@@ -11,7 +11,7 @@ import google.auth.transport.requests
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
-GOOGLE_CLIENT_ID = "696602316949-ihrcaedeofmsut89tgbgtkum0qti6p73.apps.googleusercontent.com"
+GOOGLE_CLIENT_ID = "561098515101-li4mlkhtsav4a3nkcsjgsmtfhgn5p750.apps.googleusercontent.com"
 client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
 
 flow = Flow.from_client_secrets_file(

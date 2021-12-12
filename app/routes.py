@@ -1,10 +1,11 @@
 import os
 import pathlib
-from app import app
+from app import *
 from flask import render_template
 from flask import  request, make_response
 from app.models import  *
-# import hashlib
+import hashlib
+
 
 @app.route('/')
 def index():
@@ -55,3 +56,32 @@ def registerSuccess():
             db.session.commit()
             print('register successfull')
     return render_template('login.html')
+
+
+
+@app.route('/sentMail')
+def sentMail(userMail):
+    msg = Message(
+                'reset app password',
+                sender ='noreply@gmail.com',
+                recipients ={userMail},
+                body = '''Hello Flask message sent from Flask-Mail '''
+                )
+    mail.send(msg)
+    print('email has been send')
+    return 'Sent'
+
+@app.route('/forgetPassword')
+def forgetPassword():
+    return render_template('forgetPassword.html')
+
+@app.route('/reset' ,methods=['GET','POST'])
+def reset():
+    email = request.form.get('email')
+    result = db.session.query(User).filter(User.email==email).first()
+    print(result)
+    sentMail('rohits8853@gmail.com')
+    if  result:
+        return render_template('login.html');
+    return render_template('forgetPassword.html' ,error='ERROR: Please enter registerd email')
+
