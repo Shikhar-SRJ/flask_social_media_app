@@ -63,3 +63,15 @@ class InterestsForm(FlaskForm):
     international_news = BooleanField('Are you interested in international news')
     politics = BooleanField('Are you interested in politics')
     submit = SubmitField('Remember my Interests')
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset Password')
+
