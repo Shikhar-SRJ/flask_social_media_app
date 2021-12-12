@@ -5,7 +5,11 @@
     <div class="container">
     <div class="container">
         {% for topic in topics %}
-        <h2>{{ topic.title() }}</h2>
+            {% if '_' in topic %}
+                <h2>{{ " ".join(topic.title().split('_')) }}</h2>
+            {% else %}
+                <h2>{{ topic.title() }}</h2>
+            {% endif %}
         <div class="container">
         {% if Interests.get_interested_user_by_topic(topic, current_user)==[] %}
             <p>No users found with similar interests</p>
