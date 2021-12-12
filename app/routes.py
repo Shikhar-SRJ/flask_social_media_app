@@ -50,6 +50,7 @@ def explore():
     prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
     return render_template('index.html',
                            title='Explore',
+                           page_head='Explore',
                            posts=posts.items,
                            next_url=next_url,
                            prev_url=prev_url)
@@ -235,3 +236,56 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
+
+
+@app.route('/posts/post/<id>')
+@login_required
+def post(id):
+    post = Post.query.get_or_404(id)
+    return render_template('post.html', post=post)
+
+
+@app.route('/posts/delete/<id>')
+@login_required
+def delete_post(id):
+    post = Post.query.get_or_404(id)
+    if post.user_id != current_user.id:
+        flash('You are not authorised to delete this post')
+        return redirect(url_for('index'))
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post deleted')
+    return redirect(url_for('index'))
+
+
+@app.route('/posts/update/<id>', methods=['GET', 'POST'])
+@login_required
+def update_post(id):
+    post = Post.query.get_or_404(id)
+    if post.user_id != current_user.id:
+        flash('You are not authorised to update this post')
+        return redirect(url_for('index'))
+    form = PostForm()
+    if form.validate_on_submit():
+        post.body = form.post.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('index'))
+    elif request.method == 'GET':
+        form.post.data = post.body
+    return render_template('index.html', page_head='Edit Post', hide=True, form=form)
+
+
+@app.route('/users/delete/<username>')
+@login_required
+def delete_user(username):
+    if current_user.username == username:
+        try:
+            current_user.posts.delete()
+            db.session.delete(current_user)
+            db.session.commit()
+            flash('Account deleted successfully')
+            return redirect(url_for('login'))
+        except:
+            db.session.rollback()
+    return redirect(url_for('/edit_profile'))

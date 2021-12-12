@@ -4,16 +4,17 @@
 {% block app_content %}
     {% if homepage %}
         <h1>Hello {{ current_user.username }}!</h1>
-    {% else %}
-        <h1>Explore</h1>
+    {% elif page_head %}
+        <h1>{{ page_head }}</h1>
     {% endif %}
     {% if form %}
     {{ wtf.quick_form(form) }}
-    <br>
     {% endif %}
+    <br>
     {% for post in posts %}
         {% include '_post.html' %}
     {% endfor %}
+    {% if not hide %}
     <nav aria-label="...">
         <ul class="pager">
             <li class="previous{% if not prev_url %} disabled{% endif %}">
@@ -28,4 +29,5 @@
             </li>
         </ul>
     </nav>
+    {% endif %}
 {% endblock %}
