@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block app_content %}
     <h1>Users with similar interests:</h1>
-    {% for topic in topics %}
+    <div class="container">
+    <div class="container">
+        {% for topic in topics %}
         <h2>{{ topic.title() }}</h2>
+        <div class="container">
         {% if Interests.get_interested_user_by_topic(topic, current_user)==[] %}
             <p>No users found with similar interests</p>
         {% else %}
@@ -11,6 +14,8 @@
                 {% include '_user.html' %}
             {% endfor %}
         {% endif %}
-        <hr>
+        </div>
     {% endfor %}
+    </div>
+    </div>
 {% endblock %}

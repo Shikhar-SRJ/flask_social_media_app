@@ -1,15 +1,11 @@
 {% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block content %}
     <h1>Customise your interests:</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>{{ form.music() }} {{ form.music.label }}</p>
-        <p>{{ form.tech() }} {{ form.tech.label }}</p>
-        <p>{{ form.sports() }} {{ form.sports.label }}</p>
-        <p>{{ form.local_news() }} {{ form.local_news.label }}</p>
-        <p>{{ form.international_news() }} {{ form.international_news.label }}</p>
-        <p>{{ form.politics() }} {{ form.politics.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
 {% endblock %}
