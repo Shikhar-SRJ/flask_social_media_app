@@ -6,7 +6,6 @@
             <td><img src="{{ post.author.avatar(36) }}"></td>
             <td><a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a> says:<br>{{ post.body }}</td>
             <td> </td>
-            <!-- <td><a href="{{ url_for('postDelete', id = post.id) }}">{{ post.caption }}</a> </td> -->
             <td><a href="{{ url_for('edit_Post', id = post.id) }}">{{ post.caption }}</a> </td>
         </tr>
 
