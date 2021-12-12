@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-primary">
+    <nav class="navbar navbar-nav navbar-primary" style="margin-bottom: 2em">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -46,7 +46,7 @@
             {% endfor %}
         {% endif %}
         {% endwith %}
-        {% block app_content %}{% endblock %}
+            {% block app_content %}{% endblock %}
     </div>
 {% endblock %}
 
