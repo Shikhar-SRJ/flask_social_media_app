@@ -134,7 +134,6 @@ def edit_profile():
 @login_required
 def delete_user(username):
     if current_user.username == username:
-        # user=User.query.get_or_404(username)
         try:
             db.session.delete(current_user)
             db.session.commit()
@@ -187,3 +186,4 @@ def unfollow(username):
         return redirect(url_for('user', username=username))
     else:
         return redirect(url_for('index'))
+

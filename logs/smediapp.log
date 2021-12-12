@@ -93,3 +93,7 @@ Traceback (most recent call last):
   File "/home/adminroot/Desktop/group_assignment/app/templates/edit_profile.html", line 22, in template
     {% comment %} <p>{{form.delete()}}</p> {% endcomment %}
 jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'comment'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2021-12-12 14:25:41,949 INFO: SMediApp startup [in /home/adminroot/Desktop/group_assignment/app/__init__.py:43]
+2021-12-12 14:25:55,707 INFO: SMediApp startup [in /home/adminroot/Desktop/group_assignment/app/__init__.py:43]
+2021-12-12 14:26:05,010 INFO: SMediApp startup [in /home/adminroot/Desktop/group_assignment/app/__init__.py:43]
+2021-12-12 14:26:17,150 INFO: SMediApp startup [in /home/adminroot/Desktop/group_assignment/app/__init__.py:43]
