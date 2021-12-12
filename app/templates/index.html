@@ -7,7 +7,10 @@
     {% if form %}
     <form action="" method="post">
         {{ form.hidden_tag() }}
-        <p>
+        <p> 
+            <!-- updated -->
+            {{form.caption.label}}<br>
+            {{form.caption(cols=32, rows = 2)}}<br>
             {{ form.post.label }}<br>
             {{ form.post(cols=32, rows=4) }}<br>
             {% for error in form.post.errors %}

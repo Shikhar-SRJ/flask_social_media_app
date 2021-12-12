@@ -1,7 +1,7 @@
 from flask import request, render_template, redirect, url_for, flash
 from app.models import User, Post
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, PostForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, PostForm,UpdatePostForm
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
@@ -19,7 +19,7 @@ def before_request():
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
+        post = Post(caption = form.caption.data,body=form.post.data, author=current_user)  #update
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
@@ -36,6 +36,25 @@ def index():
                            posts=posts.items,
                            next_url=next_url,
                            prev_url=prev_url)
+
+# CRUD POST
+@app.route('/edit-post/<int:id>')
+@login_required
+def edit_Post(id):
+    post = Post(author=current_user)
+    return render_template('postEdit.html',id = id,post = post)
+
+# Delete Post
+@app.route('/post-delete/<id>', methods=['GET', 'POST'])
+@login_required
+def postDelete(id):
+    post = Post.query.get_or_404(id)
+    if post.user_id == current_user.id:
+        db.session.delete(post)
+        db.session.commit()
+        return redirect(url_for('login'))
+
+
 
 
 @app.route('/explore')
@@ -126,6 +145,21 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
+
+@app.route('/delete/<username>')
+@login_required
+def delete_user(username):
+    if current_user.username == username:
+        try:
+            current_user.posts.delete()
+            db.session.delete(current_user)
+            db.session.commit()
+            return redirect(url_for('login'))
+        except:
+            db.session.rollback()
+    return redirect(url_for('/edit_profile'))
+
+
 
 
 @app.route('/follow/<username>', methods=['POST'])
