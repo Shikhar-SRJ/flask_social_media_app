@@ -10,7 +10,8 @@
                 {% if user.last_seen %}<p>Last seen on: {{ moment(user.last_seen).format('LLL') }}</p>{% endif %}
                 <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
                 {% if user == current_user %}
-                    <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+                    <a class="btn btn-info" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+                    <a class="btn btn-danger" href="{{ url_for('delete_user', username=user.username) }}">Delete Profile</a>
                 {% elif not current_user.is_following(user) %}
                     <p>
                         <form action="{{ url_for('follow', username=user.username) }}" method="post">
