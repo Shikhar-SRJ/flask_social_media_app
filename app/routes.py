@@ -1,10 +1,12 @@
 from flask import request, render_template, redirect, url_for, flash
-from app.models import User, Post
+from app.models import User, Post, Interests
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, PostForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, PostForm, InterestsForm, \
+    ResetPasswordRequestForm, ResetPasswordForm
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
+from app.email import send_password_reset_email
 
 
 @app.before_request
@@ -85,7 +87,9 @@ def register():
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
+        interests = Interests(interested=user)
         db.session.add(user)
+        db.session.add(interests)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
@@ -121,7 +125,7 @@ def edit_profile():
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_profile'))
+        return redirect(url_for('user', username=current_user.username))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
@@ -166,3 +170,68 @@ def unfollow(username):
         return redirect(url_for('user', username=username))
     else:
         return redirect(url_for('index'))
+
+
+@app.route('/my_interests', methods=['GET', 'POST'])
+@login_required
+def my_interests():
+    form = InterestsForm()
+    interests = Interests.query.filter_by(interested=current_user).first()
+    if form.validate_on_submit():
+        interests.music = form.music.data
+        interests.tech = form.tech.data
+        interests.sports = form.sports.data
+        interests.local_news = form.local_news.data
+        interests.international_news = form.international_news.data
+        interests.politics = form.politics.data
+        db.session.commit()
+        flash('You interests have been updated')
+        return redirect(url_for('user', username=current_user.username))
+    elif request.method == 'GET':
+        form.music.data = interests.music
+        form.tech.data = interests.tech
+        form.sports.data = interests.sports
+        form.local_news.data = interests.local_news
+        form.international_news.data = interests.international_news
+        form.politics.data = interests.politics
+    return render_template('edit_interests.html', title='Edit Interests', form=form)
+
+
+@app.route('/suggestions')
+@login_required
+def suggestions():
+    topics = [k for k, v in current_user.user_interests().items() if v]
+    # for topic in topics:
+    #     interested_users = Interests.get_interested_user_by_topic(topic)
+    #     print(interested_users, topic)
+    return render_template('suggestions.html', topics=topics, Interests=Interests, current_user=current_user)
+
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html',title='Reset Password', form=form)
+
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)

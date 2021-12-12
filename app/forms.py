@@ -53,3 +53,25 @@ class EmptyForm(FlaskForm):
 class PostForm(FlaskForm):
     post = TextAreaField('Say something', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class InterestsForm(FlaskForm):
+    music = BooleanField('Are you interested in music')
+    tech = BooleanField('Are you interested in tech')
+    sports = BooleanField('Are you interested in sports')
+    local_news = BooleanField('Are you interested in local_news')
+    international_news = BooleanField('Are you interested in international news')
+    politics = BooleanField('Are you interested in politics')
+    submit = SubmitField('Remember my Interests')
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset Password')
+
