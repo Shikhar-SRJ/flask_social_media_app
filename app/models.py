@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    interests = db.relationship('Interests', backref='interested', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     followed = db.relationship(
@@ -58,6 +59,12 @@ class User(db.Model, UserMixin):
         own = Post.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Post.timestamp.desc())
 
+    def user_interests(self):
+        filter_lst = ['local_news', 'tech', 'politics', 'sports', 'music', 'international_news']
+        i = self.interests.first()
+        interest_dict = {k: v for (k, v) in i.__dict__.items() if k in filter_lst}
+        return interest_dict
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -67,6 +74,34 @@ class Post(db.Model):
 
     def __repr__(self):
         return f'<Post {self.body}>'
+
+
+class Interests(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    music = db.Column(db.Boolean, default=False)
+    tech = db.Column(db.Boolean, default=False)
+    sports = db.Column(db.Boolean, default=False)
+    local_news = db.Column(db.Boolean, default=False)
+    international_news = db.Column(db.Boolean, default=False)
+    politics = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    @staticmethod
+    def get_interested_user(interests):
+        users = []
+        for interest in interests:
+            users.append(interest.interested)
+        return users
+
+    @staticmethod
+    def get_interested_user_by_topic(topic, current_user):
+        users = []
+        interests = Interests.query.filter(eval(f'Interests.{topic}')).all()
+        for interest in interests:
+            users.append(interest.interested)
+        if current_user in users:
+            users.remove(current_user)
+        return users
 
 
 @login.user_loader
