@@ -1,0 +1,81 @@
+2021-12-12 16:56:43,174 INFO: SMediApp startup [in /home/i1613/Backend_track/miniproj/app/__init__.py:43]
+2021-12-12 16:57:52,729 INFO: SMediApp startup [in /home/i1613/Backend_track/miniproj/app/__init__.py:43]
+2021-12-12 17:00:08,155 INFO: SMediApp startup [in /home/i1613/Backend_track/miniproj/app/__init__.py:43]
+2021-12-12 17:19:44,676 INFO: SMediApp startup [in /home/adminroot/Desktop/group_assignment/app/__init__.py:43]
+2021-12-12 17:19:47,316 ERROR: Exception on / [GET] [in /home/adminroot/.local/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1283, in _execute_context
+    self.dialect.do_execute(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 2242, in preprocess_request
+    rv = func()
+  File "/home/adminroot/Desktop/group_assignment/app/routes.py", line 12, in before_request
+    if current_user.is_authenticated:
+  File "/home/adminroot/.local/lib/python3.8/site-packages/werkzeug/local.py", line 347, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/werkzeug/local.py", line 306, in _get_current_object
+    return self.__local()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask_login/utils.py", line 26, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask_login/utils.py", line 346, in _get_user
+    current_app.login_manager._load_user()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask_login/login_manager.py", line 318, in _load_user
+    user = self._user_callback(user_id)
+  File "/home/adminroot/Desktop/group_assignment/app/models.py", line 75, in load_user
+    return User.query.get(int(id))
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 1021, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 1138, in _get_impl
+    return db_load_fn(self, primary_key_identity)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/loading.py", line 287, in load_on_pk_identity
+    return q.one()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3436, in one
+    ret = self.one_or_none()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3405, in one_or_none
+    ret = list(self)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3481, in __iter__
+    return self._execute_and_instances(context)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3506, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1020, in execute
+    return meth(self, multiparams, params)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1133, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1323, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1517, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 178, in raise_
+    raise exception
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1283, in _execute_context
+    self.dialect.do_execute(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: user
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.about_me AS user_about_me, user.last_seen AS user_last_seen 
+FROM user 
+WHERE user.id = ?]
+[parameters: (2,)]
+(Background on this error at: http://sqlalche.me/e/e3q8)
+2021-12-12 17:20:15,054 INFO: SMediApp startup [in /home/adminroot/Desktop/group_assignment/app/__init__.py:43]
+2021-12-12 17:20:21,719 INFO: SMediApp startup [in /home/adminroot/Desktop/group_assignment/app/__init__.py:43]
+2021-12-12 17:20:28,535 INFO: SMediApp startup [in /home/adminroot/Desktop/group_assignment/app/__init__.py:43]
+2021-12-12 17:20:32,557 INFO: SMediApp startup [in /home/adminroot/Desktop/group_assignment/app/__init__.py:43]

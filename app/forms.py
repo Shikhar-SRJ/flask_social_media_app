@@ -51,5 +51,11 @@ class EmptyForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
+    caption = TextAreaField('Enter Caption',validators=[DataRequired()]) #update
     post = TextAreaField('Say something', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class UpdatePostForm(FlaskForm):
+    caption = TextAreaField('Enter Caption') #update
+    post = TextAreaField('Say something')
     submit = SubmitField('Submit')

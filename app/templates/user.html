@@ -29,7 +29,7 @@
             </td>
         </tr>
     </table>
-    <a href="{{ url_for('delete_user', username=user.username)}}">delete user</a>
+        <a href="{{ url_for('delete_user', username=user.username)}}">delete user</a>
     <hr>
     {% for post in posts %}
         {% include '_post.html' %}

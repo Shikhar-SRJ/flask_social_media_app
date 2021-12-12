@@ -1,0 +1,123 @@
+2021-12-12 17:21:04,507 ERROR: Exception on / [GET] [in /home/adminroot/.local/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1283, in _execute_context
+    self.dialect.do_execute(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: post.caption
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/adminroot/Desktop/group_assignment/app/routes.py", line 28, in index
+    posts = current_user.followed_posts().paginate(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask_sqlalchemy/__init__.py", line 496, in paginate
+    items = self.limit(per_page).offset((page - 1) * per_page).all()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3319, in all
+    return list(self)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3481, in __iter__
+    return self._execute_and_instances(context)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3506, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1020, in execute
+    return meth(self, multiparams, params)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1133, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1323, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1517, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 178, in raise_
+    raise exception
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1283, in _execute_context
+    self.dialect.do_execute(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: post.caption
+[SQL: SELECT anon_1.post_id AS anon_1_post_id, anon_1.post_caption AS anon_1_post_caption, anon_1.post_body AS anon_1_post_body, anon_1.post_timestamp AS anon_1_post_timestamp, anon_1.post_user_id AS anon_1_post_user_id 
+FROM (SELECT post.id AS post_id, post.caption AS post_caption, post.body AS post_body, post.timestamp AS post_timestamp, post.user_id AS post_user_id 
+FROM post JOIN followers ON followers.followed_id = post.user_id 
+WHERE followers.follower_id = ? UNION SELECT post.id AS post_id, post.caption AS post_caption, post.body AS post_body, post.timestamp AS post_timestamp, post.user_id AS post_user_id 
+FROM post 
+WHERE post.user_id = ?) AS anon_1 ORDER BY anon_1.post_timestamp DESC
+ LIMIT ? OFFSET ?]
+[parameters: (1, 1, 10, 0)]
+(Background on this error at: http://sqlalche.me/e/e3q8)
+2021-12-12 17:21:49,518 INFO: SMediApp startup [in /home/adminroot/Desktop/group_assignment/app/__init__.py:43]
+2021-12-12 17:21:53,150 ERROR: Exception on / [GET] [in /home/adminroot/.local/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1283, in _execute_context
+    self.dialect.do_execute(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: post.caption
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/adminroot/Desktop/group_assignment/app/routes.py", line 28, in index
+    posts = current_user.followed_posts().paginate(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/flask_sqlalchemy/__init__.py", line 496, in paginate
+    items = self.limit(per_page).offset((page - 1) * per_page).all()
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3319, in all
+    return list(self)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3481, in __iter__
+    return self._execute_and_instances(context)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3506, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1020, in execute
+    return meth(self, multiparams, params)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1133, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1323, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1517, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 178, in raise_
+    raise exception
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1283, in _execute_context
+    self.dialect.do_execute(
+  File "/home/adminroot/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: post.caption
+[SQL: SELECT anon_1.post_id AS anon_1_post_id, anon_1.post_caption AS anon_1_post_caption, anon_1.post_body AS anon_1_post_body, anon_1.post_timestamp AS anon_1_post_timestamp, anon_1.post_user_id AS anon_1_post_user_id 
+FROM (SELECT post.id AS post_id, post.caption AS post_caption, post.body AS post_body, post.timestamp AS post_timestamp, post.user_id AS post_user_id 
+FROM post JOIN followers ON followers.followed_id = post.user_id 
+WHERE followers.follower_id = ? UNION SELECT post.id AS post_id, post.caption AS post_caption, post.body AS post_body, post.timestamp AS post_timestamp, post.user_id AS post_user_id 
+FROM post 
+WHERE post.user_id = ?) AS anon_1 ORDER BY anon_1.post_timestamp DESC
+ LIMIT ? OFFSET ?]
+[parameters: (1, 1, 10, 0)]
+(Background on this error at: http://sqlalche.me/e/e3q8)
