@@ -26,6 +26,14 @@ Install dependencies
     pip install -r requirements.txt
 ```
 
+Export Flask app and environment
+
+```bash
+    export FLASK_APP=manage.py
+    export FLASK_ENV=development
+
+```
+
 Setup Database
 
 ```bash
